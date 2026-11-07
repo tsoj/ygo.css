@@ -5,7 +5,7 @@
     trap | dark-synchro" on any element; its descendants inherit it. Without one: Normal, in
     the dark theme Dark Synchro. Dark theme: data-theme="dark" on <html> (ygo.js switches it).
 
-    Components: .card-frame, .name-box, .attribute, .text-box (.type-line), .stat-box, .art-box;
+    Components: .card-frame, .name-box, .attribute (data-attribute), .text-box (.type-line), .stat-box, .art-box;
     styled elements: body, a, hr, button, input, select, textarea, tables in .text-box. */
 
 @font-face { font-family: "YGO Name"; src: url("assets/fonts/ygo-name.woff2") format("woff2");
@@ -181,7 +181,9 @@ hr {
     line-height: 1;
 }
 
-/* ---------- .attribute: an attribute icon (data-attribute="dark | light") ---------- */
+/* ---------- .attribute: an attribute icon ----------
+   data-attribute="dark | light | earth | fire | water | wind | divine | spell | trap" (no
+   value: dark) */
 
 .attribute {
     font: inherit;   /* (a button does not inherit the font size: the size is in em) */
@@ -195,7 +197,14 @@ hr {
     background: url("assets/attribute-dark.png") center / contain no-repeat;
     vertical-align: middle;
 }
-.attribute[data-attribute="light"] { background-image: url("assets/attribute-light.png"); }
+.attribute[data-attribute="light"]  { background-image: url("assets/attribute-light.png"); }
+.attribute[data-attribute="earth"]  { background-image: url("assets/attribute-earth.png"); }
+.attribute[data-attribute="fire"]   { background-image: url("assets/attribute-fire.png"); }
+.attribute[data-attribute="water"]  { background-image: url("assets/attribute-water.png"); }
+.attribute[data-attribute="wind"]   { background-image: url("assets/attribute-wind.png"); }
+.attribute[data-attribute="divine"] { background-image: url("assets/attribute-divine.png"); }
+.attribute[data-attribute="spell"]  { background-image: url("assets/attribute-spell.png"); }
+.attribute[data-attribute="trap"]   { background-image: url("assets/attribute-trap.png"); }
 
 /* The theme switch (ygo.js): the attribute of the theme it switches to */
 .ygo-theme-toggle { cursor: pointer; }

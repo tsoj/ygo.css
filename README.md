@@ -37,7 +37,7 @@ Without `data-card`, the type is Normal. In the dark theme, it is Dark Synchro.
 | `body` | A wall of hieroglyphs |
 | `.card-frame` | A panel of card frame |
 | `.name-box` | The box with the card name |
-| `.attribute` | An attribute icon. DARK, or LIGHT with `data-attribute="light"` |
+| `.attribute` | An attribute icon. Set it with `data-attribute`: `dark` (the default), `light`, `earth`, `fire`, `water`, `wind`, `divine`, `spell`, `trap` |
 | `.text-box` | The text box of a card. Use `.type-line` in it for `[Spellcaster/Effect]` |
 | `table.text-box` | A text box with lines between the rows |
 | `.stat-box` | A small box with a frame ring in its card type |
