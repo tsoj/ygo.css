@@ -145,9 +145,10 @@ body {
 a { color: var(--ygo-link); }
 
 hr {
+    margin: 8px 0;   /* (not auto: in a grid or flex box, an hr with auto margins has no width) */
     border: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.35);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    border-top: 1px solid var(--card-lo);
+    border-bottom: 1px solid var(--card-hi);
 }
 
 /* ---------- .card-frame: a panel of card frame ---------- */
