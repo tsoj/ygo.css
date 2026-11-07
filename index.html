@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="darkreader-lock">
+    <title>ygo.css</title>
+    <script src="ygo.js"></script>
+    <link rel="stylesheet" href="ygo.css">
+    <style>
+        /* (this page's layout, not part of ygo.css) */
+        body { margin: 0; padding: 16px; }
+        main { max-width: 860px; margin: 0 auto; display: grid; gap: 20px; }
+        section { display: grid; gap: 12px; }
+        h2 { margin: 0; }
+        p { margin: 0; line-height: 1.4; }
+        .demo { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+        pre.code { margin: 0; padding: 8px 10px; overflow-x: auto; background: rgba(0, 0, 0, 0.08);
+                   border: 1px solid rgba(0, 0, 0, 0.25); font: 13px/1.4 ui-monospace, monospace; }
+        :root[data-theme="dark"] pre.code { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.2); }
+        .card-frame.small { padding: 8px 12px; font-family: var(--ygo-font-name); }
+        form.demo label { display: grid; gap: 4px; font-family: var(--ygo-font-name); }
+    </style>
+</head>
+<body>
+<main>
+
+<h1 class="name-box">ygo.css <button class="attribute ygo-theme-toggle" type="button" aria-label="Light / dark theme" title="Light / dark theme"></button></h1>
+
+<section class="card-frame">
+    <p>A stylesheet in the materials of Yu-Gi-Oh! cards: card frames, name boxes, text boxes, with
+    hard bevels as in Windows 98. It styles some elements by themselves (body, buttons, fields)
+    and gives classes for the rest. The attribute above switches between the light theme (Normal
+    monster) and the dark theme (Dark Synchro).</p>
+    <pre class="code">&lt;script src="ygo.css/ygo.js"&gt;&lt;/script&gt;      &lt;!-- in &lt;head&gt;: the theme before the first paint --&gt;
+&lt;link rel="stylesheet" href="ygo.css/ygo.css"&gt;</pre>
+</section>
+
+<section class="card-frame">
+    <h2 class="name-box">Card frames</h2>
+    <p>A panel of card frame. The card type is <code>data-card</code> on any element; elements
+    inside take it on (name boxes, buttons, text boxes). Without one: Normal, in the dark theme
+    Dark Synchro.</p>
+    <div class="demo" id="types"></div>
+    <pre class="code">&lt;div class="card-frame" data-card="trap"&gt;...&lt;/div&gt;</pre>
+</section>
+
+<section class="card-frame">
+    <h2 class="name-box">Name boxes and attributes</h2>
+    <div class="name-box" data-card="effect">Dark Magician Girl <span class="attribute"></span></div>
+    <div class="name-box" data-card="synchro">Black Rose Dragon <span class="attribute"></span></div>
+    <div class="name-box" data-card="xyz">Number 39: Utopia <span class="attribute" data-attribute="light"></span></div>
+    <pre class="code">&lt;div class="name-box"&gt;Dark Magician Girl &lt;span class="attribute"&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;span class="attribute" data-attribute="light"&gt;&lt;/span&gt;
+&lt;!-- switches the theme (ygo.js); shows the attribute of the theme it switches to: --&gt;
+&lt;button class="attribute ygo-theme-toggle" type="button" aria-label="Light / dark theme"&gt;&lt;/button&gt;</pre>
+</section>
+
+<section class="card-frame">
+    <h2 class="name-box">Text boxes</h2>
+    <div class="text-box">
+        <p class="type-line">Spellcaster/Effect</p>
+        <p>Gains 300 ATK for every "Dark Magician" or "Magician of Black Chaos" in the GY.</p>
+    </div>
+    <table class="text-box">
+        <tr><th>Test</th><th>Games</th><th>Elo</th></tr>
+        <tr><td><a href="#">lmr-min3</a></td><td>14848</td><td>+5.6 ± 4.3</td></tr>
+        <tr><td><a href="#">tt-beta-probe</a></td><td>2354</td><td>+4.7 ± 10.0</td></tr>
+    </table>
+    <pre class="code">&lt;div class="text-box"&gt;
+    &lt;p class="type-line"&gt;Spellcaster/Effect&lt;/p&gt;
+    &lt;p&gt;Gains 300 ATK for every ...&lt;/p&gt;
+&lt;/div&gt;
+&lt;table class="text-box"&gt;...&lt;/table&gt;</pre>
+</section>
+
+<section class="card-frame">
+    <h2 class="name-box">Stat boxes and art boxes</h2>
+    <div class="demo">
+        <span class="stat-box" data-card="spell">LLR: 2.95 (-2.94, 2.94)<br>Games: 14848</span>
+        <span class="stat-box" data-card="trap">LLR: -2.97 (-2.94, 2.94)<br>Games: 6144</span>
+        <span class="stat-box" data-card="ritual">LLR: 2.96 (-2.94, 2.94)<br>Games: 9216</span>
+    </div>
+    <pre class="art-box">Elo   | 4.72 +- 10.01 (95%)
+LLR   | 0.40 (-2.94, 2.94) [0.00, 5.00]
+Games | N: 2354 W: 1192 L: 1160 D: 2</pre>
+    <pre class="code">&lt;span class="stat-box" data-card="spell"&gt;LLR: 2.95 ...&lt;/span&gt;
+&lt;pre class="art-box"&gt;...&lt;/pre&gt;</pre>
+</section>
+
+<section class="card-frame">
+    <h2 class="name-box">Buttons</h2>
+    <div class="demo">
+        <button type="button">Normal</button>
+        <button type="button" data-card="effect">Effect</button>
+        <button type="button" data-card="fusion">Fusion</button>
+        <button type="button" data-card="spell">Spell</button>
+        <button type="button" data-card="trap">Trap</button>
+        <a class="button" href="#" data-card="link">A link</a>
+        <button type="button" disabled>Disabled</button>
+    </div>
+    <pre class="code">&lt;button data-card="fusion"&gt;Fusion&lt;/button&gt;
+&lt;a class="button" href="..."&gt;A link&lt;/a&gt;</pre>
+</section>
+
+<section class="card-frame">
+    <h2 class="name-box">Fields</h2>
+    <form class="demo" onsubmit="return false">
+        <label>Dev branch <input value="futility-no-pv"></label>
+        <label>Bounds <select><option>[0, 5]</option><option>[-5, 0]</option></select></label>
+        <label>Info <textarea rows="2">search: futility-no-pv</textarea></label>
+        <label><span><input type="checkbox" checked> Adjudicate</span></label>
+    </form>
+    <hr>
+    <p>A line between parts: <code>&lt;hr&gt;</code>.</p>
+</section>
+
+</main>
+<script>
+    // (the card types of the first section)
+    const types = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'link', 'spell', 'trap', 'dark-synchro'];
+    document.getElementById('types').innerHTML = types.map(t =>
+        `<div class="card-frame small" data-card="${t}">${t.replace('-', ' ')}</div>`).join('');
+</script>
+</body>
+</html>

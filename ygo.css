@@ -1,0 +1,305 @@
+/*! ygo.css: a stylesheet in the materials of Yu-Gi-Oh! cards (frames, name boxes, text boxes),
+    with hard bevels as in Windows 98. https://github.com/tsoj/ygo.css
+
+    Card types: data-card="normal | effect | ritual | fusion | synchro | xyz | link | spell |
+    trap | dark-synchro" on any element; its descendants inherit it. Without one: Normal, in
+    the dark theme Dark Synchro. Dark theme: data-theme="dark" on <html> (ygo.js switches it).
+
+    Components: .card-frame, .name-box, .attribute, .text-box (.type-line), .stat-box, .art-box;
+    styled elements: body, a, hr, button, input, select, textarea, tables in .text-box. */
+
+@font-face { font-family: "YGO Name"; src: url("assets/fonts/ygo-name.woff2") format("woff2");
+             ascent-override: 74%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: "YGO Text"; src: url("assets/fonts/ygo-text.woff2") format("woff2");
+             ascent-override: 92%; descent-override: 28%; line-gap-override: 0%; }
+@font-face { font-family: "YGO Type"; src: url("assets/fonts/ygo-type.woff2") format("woff2");
+             ascent-override: 88%; descent-override: 22%; line-gap-override: 0%; }
+/* (the overrides center the letters in the line: the card fonts put them low) */
+
+/* The image variables are registered as URLs: a URL in an unregistered variable is resolved
+   where the variable is used, so from another stylesheet (another folder) it would point
+   elsewhere. Registered, it is resolved where it is set, as a path from this file. */
+@property --card-frame       { syntax: "<url> | none"; inherits: true; initial-value: none; }
+@property --card-frame-small { syntax: "<url> | none"; inherits: true; initial-value: none; }
+@property --card-text        { syntax: "<url> | none"; inherits: true; initial-value: none; }
+@property --ygo-wall         { syntax: "<url> | none"; inherits: true; initial-value: none; }
+@property --ygo-text-box-frame { syntax: "<url> | none"; inherits: true; initial-value: none; }
+
+:root {
+    --ygo-font-name: "YGO Name", Georgia, serif;   /* card names: small capitals */
+    --ygo-font-text: "YGO Text", Georgia, serif;   /* card text */
+    --ygo-font-type: "YGO Type", Georgia, serif;   /* the type line: [Spellcaster/Effect] */
+
+    --ygo-ink:      #120c06;    /* text on a text box */
+    --ygo-ink-soft: #4a2c18;
+    --ygo-rule:     #c9a88c;    /* lines between table rows */
+    --ygo-link:     #7a1f08;
+
+    --ygo-wall:       url("assets/wall-light.jpg");   /* hieroglyphs, a 432 x 520 tile */
+    --ygo-wall-color: #7c5a2c;
+
+    --ygo-steel-hi: #6f7a95;    /* the art box: the frame around a card's art */
+    --ygo-steel-lo: #3c4560;
+    --ygo-steel-in: #0d1018;
+
+    --ygo-text-box-frame: url("assets/text-box-frame.png");
+
+    /* Bevels: light edges top and left, dark edges bottom and right */
+    --ygo-raised: var(--card-hi) var(--card-lo) var(--card-lo) var(--card-hi);
+    --ygo-sunken: var(--card-lo) var(--card-hi) var(--card-hi) var(--card-lo);
+    --ygo-raised-overlay: rgba(255, 255, 255, 0.55) rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.55);
+    --ygo-sunken-overlay: rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.55) rgba(255, 255, 255, 0.55) rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --ygo-wall:       url("assets/wall-dark.jpg");
+    --ygo-wall-color: #1d1a17;
+    --ygo-rule:       #a9a6a2;
+}
+
+/* ---------- Card types ----------
+   --card-frame: the frame texture (512px tile), --card-frame-small: the same at 256px (for
+   small boxes), --card-text: the text box texture (256px), --card-hi / --card-lo: the bevel
+   colors (measured on the name box of the card templates), --card-ink: the name color.
+   Textures are drawn at their own size: a tile scaled by the browser can show its edges as
+   thin lines at fractional device pixel ratios. */
+
+:root, [data-card="normal"] {
+    --card-frame: url("assets/textures/frame-normal.jpg");
+    --card-frame-small: url("assets/textures/frame-normal-256.jpg");
+    --card-text: url("assets/textures/text-normal-256.jpg");
+    --card-hi: #d8c290; --card-lo: #79542a; --card-ink: #000;
+}
+:root[data-theme="dark"], [data-card="dark-synchro"] {
+    --card-frame: url("assets/textures/frame-dark-synchro.jpg");
+    --card-frame-small: url("assets/textures/frame-dark-synchro-256.jpg");
+    --card-text: url("assets/textures/text-dark-synchro-256.jpg");
+    --card-hi: #6e6460; --card-lo: #151211; --card-ink: #f1ede8;
+}
+[data-card="effect"] {
+    --card-frame: url("assets/textures/frame-effect.jpg");
+    --card-frame-small: url("assets/textures/frame-effect-256.jpg");
+    --card-text: url("assets/textures/text-effect-256.jpg");
+    --card-hi: #d5a783; --card-lo: #713520; --card-ink: #000;
+}
+[data-card="ritual"] {
+    --card-frame: url("assets/textures/frame-ritual.jpg");
+    --card-frame-small: url("assets/textures/frame-ritual-256.jpg");
+    --card-text: url("assets/textures/text-ritual-256.jpg");
+    --card-hi: #7eb0d6; --card-lo: #1c3a71; --card-ink: #000;
+}
+[data-card="fusion"] {
+    --card-frame: url("assets/textures/frame-fusion.jpg");
+    --card-frame-small: url("assets/textures/frame-fusion-256.jpg");
+    --card-text: url("assets/textures/text-fusion-256.jpg");
+    --card-hi: #ac92c8; --card-lo: #392a5a; --card-ink: #fff;
+}
+[data-card="synchro"] {
+    --card-frame: url("assets/textures/frame-synchro.jpg");
+    --card-frame-small: url("assets/textures/frame-synchro-256.jpg");
+    --card-text: url("assets/textures/text-synchro-256.jpg");
+    --card-hi: #f9fafa; --card-lo: #7b8486; --card-ink: #000;
+}
+[data-card="xyz"] {
+    --card-frame: url("assets/textures/frame-xyz.jpg");
+    --card-frame-small: url("assets/textures/frame-xyz-256.jpg");
+    --card-text: url("assets/textures/text-xyz-256.jpg");
+    --card-hi: #434f5a; --card-lo: #03090f; --card-ink: #fff;
+}
+[data-card="link"] {
+    --card-frame: url("assets/textures/frame-link.jpg");
+    --card-frame-small: url("assets/textures/frame-link-256.jpg");
+    --card-text: url("assets/textures/text-link-256.jpg");
+    --card-hi: #529dd0; --card-lo: #06305f; --card-ink: #fff;
+}
+[data-card="spell"] {
+    --card-frame: url("assets/textures/frame-spell.jpg");
+    --card-frame-small: url("assets/textures/frame-spell-256.jpg");
+    --card-text: url("assets/textures/text-spell-256.jpg");
+    --card-hi: #3fb8b1; --card-lo: #065448; --card-ink: #fff;
+}
+[data-card="trap"] {
+    --card-frame: url("assets/textures/frame-trap.jpg");
+    --card-frame-small: url("assets/textures/frame-trap-256.jpg");
+    --card-text: url("assets/textures/text-trap-256.jpg");
+    --card-hi: #cd7fb5; --card-lo: #611842; --card-ink: #fff;
+}
+
+/* ---------- The page ---------- */
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+    background: var(--ygo-wall-color) var(--ygo-wall) 0 0 / 432px;
+    font-family: var(--ygo-font-text);
+    color: var(--card-ink);
+}
+
+a { color: var(--ygo-link); }
+
+hr {
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+/* ---------- .card-frame: a panel of card frame ---------- */
+
+.card-frame {
+    background: var(--card-frame) 0 0 / 512px;
+    border: 3px solid;
+    border-color: var(--ygo-raised);
+    color: var(--card-ink);
+    padding: 12px;
+}
+.card-frame a, .name-box a { color: inherit; }
+
+/* ---------- .name-box: a raised box with a card name ---------- */
+
+.name-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0;
+    padding: 6px 8px 6px 12px;
+    border: 6px solid;
+    border-color: var(--ygo-raised);
+    background: var(--card-frame) 128px 64px / 512px;
+    color: var(--card-ink);
+    font-family: var(--ygo-font-name);
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+/* ---------- .attribute: an attribute icon (data-attribute="dark | light") ---------- */
+
+.attribute {
+    flex: none;
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: url("assets/attribute-dark.png") center / contain no-repeat;
+    vertical-align: middle;
+}
+.attribute[data-attribute="light"] { background-image: url("assets/attribute-light.png"); }
+
+/* The theme switch (ygo.js): the attribute of the theme it switches to */
+.ygo-theme-toggle { cursor: pointer; }
+:root[data-theme="dark"] .ygo-theme-toggle { background-image: url("assets/attribute-light.png"); }
+.ygo-theme-toggle:focus-visible { outline: 1px dotted currentColor; outline-offset: 2px; }
+
+/* ---------- .text-box: the framed text box of a card ---------- */
+
+.text-box {
+    /* The frame lies on the text box: its inner shadow falls on the text box, its outer
+       shadow on what is around. The frame image is at 0.75 of the template's size; slices
+       of 48px are shown at half size. The frame's outer edge is 9px (top, left) and 11px
+       (right, bottom: the longer shadow) into the image; the outset puts it on the edge. */
+    border: 12px solid transparent;
+    border-image: var(--ygo-text-box-frame) 48 / 24px / 4.5px 5.6px 5.6px 4.5px stretch;
+    background: var(--card-text) 0 0 / 256px;
+    color: var(--ygo-ink);
+    padding: 4px 8px;
+}
+.text-box a { color: var(--ygo-link); }
+.text-box .type-line { font-family: var(--ygo-font-type); }
+.text-box .type-line::before { content: "["; }
+.text-box .type-line::after { content: "]"; }
+
+table.text-box {
+    border-collapse: separate;
+    border-spacing: 0;
+    padding: 0;
+}
+.text-box th {
+    color: #000;
+    font-family: var(--ygo-font-type);
+    font-weight: 400;
+    text-align: left;
+    border-bottom: 2px solid #000;
+}
+.text-box td { border-bottom: 1px solid var(--ygo-rule); }
+.text-box tr:last-child td { border-bottom: 0; }
+.text-box th, .text-box td { padding: 7px 10px; }
+
+/* ---------- .stat-box: a small box of a card type (frame ring, its text box) ---------- */
+
+.stat-box {
+    display: inline-block;
+    padding: 4px 7px 3px;
+    border: 4px solid transparent;
+    border-radius: 4px;
+    background: var(--card-text) 0 0 / 256px padding-box, var(--card-frame-small) 0 0 / 256px border-box;
+    box-shadow: 0 0 0 1px #000, inset 0 0 0 1px rgba(0, 0, 0, 0.7);
+    color: var(--ygo-ink);
+    font-family: var(--ygo-font-text);
+    line-height: 1.2;
+}
+
+/* ---------- .art-box: the steel frame around a card's art, dark inside ---------- */
+
+.art-box {
+    background: var(--ygo-steel-in);
+    color: #d9dde8;
+    border: 7px solid;
+    border-color: var(--ygo-steel-hi) var(--ygo-steel-lo) var(--ygo-steel-lo) var(--ygo-steel-hi);
+    outline: 1px solid #1d120b;
+    padding: 10px 14px;
+    overflow-x: auto;
+}
+
+/* ---------- Buttons: raised boxes in the card type's frame ---------- */
+
+button:not(.attribute), .button,
+input[type="button"], input[type="submit"], input[type="reset"] {
+    padding: 5px 14px;
+    border: 3px solid;
+    border-color: var(--ygo-raised-overlay);
+    border-radius: 0;
+    background: var(--card-frame-small) 0 0 / 256px;
+    color: var(--card-ink);
+    font-family: var(--ygo-font-name);
+    font-size: 1.1rem;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+button:not(.attribute, :disabled):active, .button:active,
+input:is([type="button"], [type="submit"], [type="reset"]):not(:disabled):active {
+    border-color: var(--ygo-sunken-overlay);
+    padding: 6px 13px 4px 15px;
+}
+button:not(.attribute):disabled, input:is([type="button"], [type="submit"], [type="reset"]):disabled {
+    cursor: not-allowed;
+    filter: saturate(0.3) opacity(0.75);
+}
+button:not(.attribute):focus-visible, .button:focus-visible,
+input:is([type="button"], [type="submit"], [type="reset"]):focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: -6px;
+}
+
+/* ---------- Fields: sunken text box ---------- */
+
+input:not([type="button"], [type="submit"], [type="reset"], [type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"]),
+select, textarea {
+    padding: 4px 6px;
+    border: 2px solid;
+    border-color: var(--ygo-sunken);
+    border-radius: 0;
+    background: var(--card-text) 0 0 / 256px;
+    color: var(--ygo-ink);
+    font-family: var(--ygo-font-text);
+    font-size: 1rem;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 1px dotted #000;
+    outline-offset: -4px;
+}
+input[type="checkbox"], input[type="radio"], input[type="range"] { accent-color: var(--card-lo); }
