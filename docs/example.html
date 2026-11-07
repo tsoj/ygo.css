@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ygo.css example</title>
+    <!-- The example of the README (docs/example-light.jpg, docs/example-dark.jpg).
+         example.html?dark shows the dark theme. -->
+    <script>if (location.search === '?dark') document.documentElement.setAttribute('data-theme', 'dark');</script>
+    <link rel="stylesheet" href="../ygo.css">
+    <style>
+        body { margin: 0; padding: 16px; width: 620px; }
+        .card-frame { display: grid; gap: 14px; }
+        .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        p { margin: 0; }
+    </style>
+</head>
+<body>
+<div class="card-frame">
+    <div class="name-box">Black Rose Dragon <span class="attribute"></span></div>
+    <div class="text-box">
+        <p class="type-line">Dragon/Synchro/Effect</p>
+        <p>When this card is Synchro Summoned: You can destroy all cards on the field.</p>
+    </div>
+    <div class="row">
+        <span class="stat-box" data-card="spell">LLR: 2.95<br>Elo: +5.6</span>
+        <span class="stat-box" data-card="trap">LLR: -2.97<br>Elo: -2.2</span>
+        <span class="stat-box">LLR: 0.40<br>Elo: +4.7</span>
+    </div>
+    <div class="row">
+        <button type="button">Summon</button>
+        <button type="button" data-card="fusion">Fuse</button>
+        <button type="button" data-card="spell">Activate</button>
+        <input value="Dark Magician Girl">
+    </div>
+</div>
+</body>
+</html>

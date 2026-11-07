@@ -1,74 +1,98 @@
 # ygo.css
 
-A stylesheet in the materials of Yu-Gi-Oh! cards: card frames, name boxes, text boxes and
-attributes, with hard bevels as in Windows 98. Like [98.css](https://jdan.github.io/98.css/),
-it styles some elements by themselves and gives classes for the rest. `index.html` shows all of
-it.
+A CSS library that looks like Yu-Gi-Oh! cards. It has card frames, name boxes, text boxes and
+attributes. The edges are hard bevels, as in Windows 98. It works like
+[98.css](https://github.com/jdan/98.css): it styles some elements directly and gives classes for
+the rest.
+
+Docs and examples: https://tsoj.github.io/ygo.css/
+
+![Light theme](docs/example-light.jpg)
+![Dark theme](docs/example-dark.jpg)
 
 ## Use
 
+Put the `ygo.css` folder into your project. Then add to `<head>`:
+
 ```html
-<head>
-    <script src="ygo.css/ygo.js"></script>   <!-- the theme, before the first paint -->
-    <link rel="stylesheet" href="ygo.css/ygo.css">
-</head>
+<script src="ygo.css/ygo.js"></script>
+<link rel="stylesheet" href="ygo.css/ygo.css">
 ```
 
-The stylesheet finds its images and fonts in `assets/`, next to it.
+`ygo.css` loads its images and fonts from `assets/`. Keep that folder next to it.
 
 ## Card types
 
-`data-card` on any element sets its card type: `normal`, `effect`, `ritual`, `fusion`,
-`synchro`, `xyz`, `link`, `spell`, `trap`, `dark-synchro`. The elements inside take it on.
-Without one: Normal, in the dark theme Dark Synchro.
+Set the card type with `data-card` on an element. The elements inside it get the same type.
+
+Types: `normal`, `effect`, `ritual`, `fusion`, `synchro`, `xyz`, `link`, `spell`, `trap`,
+`dark-synchro`.
+
+Without `data-card`, the type is Normal. In the dark theme, it is Dark Synchro.
 
 ## Components
 
-| Class or element | What it is |
+| Class or element | Look |
 |---|---|
 | `body` | A wall of hieroglyphs |
-| `.card-frame` | A panel of card frame, with raised edges |
-| `.name-box` | A raised box with a card name |
-| `.attribute` | An attribute icon: DARK, or LIGHT with `data-attribute="light"` |
-| `.text-box` | The framed text box of a card; `.type-line` inside: `[Spellcaster/Effect]`. A `table.text-box` gets ruled rows |
-| `.stat-box` | A small box of a card type: a ring of its frame around its text box |
-| `.art-box` | The steel frame around a card's art, dark inside (for code, output) |
-| `button`, `.button`, `input[type=submit]` | Raised boxes in the card type's frame; pressed in when clicked |
-| `input`, `select`, `textarea` | Sunken text box fields |
-| `hr` | An etched line |
+| `.card-frame` | A panel of card frame |
+| `.name-box` | The box with the card name |
+| `.attribute` | An attribute icon. DARK, or LIGHT with `data-attribute="light"` |
+| `.text-box` | The text box of a card. Use `.type-line` in it for `[Spellcaster/Effect]` |
+| `table.text-box` | A text box with lines between the rows |
+| `.stat-box` | A small box with a frame ring in its card type |
+| `.art-box` | A dark box in a steel frame, for code or output |
+| `button`, `.button` | A raised box. It looks pushed in when you click it |
+| `input`, `select`, `textarea` | A sunken text box |
+| `hr` | An engraved line |
 
 ## Light and dark theme
 
-The theme is light (Normal monster) unless dark (Dark Synchro) was chosen: `data-theme="dark"`
-on `<html>`. `ygo.js` sets it before the first paint from the stored choice (localStorage
-`ygo-theme`) and switches it when an element with the class `ygo-theme-toggle` is clicked. The
-switch can be an attribute, which shows the attribute of the theme it switches to:
+The light theme is the default. `data-theme="dark"` on `<html>` sets the dark theme.
+
+`ygo.js` does this for you:
+
+- It sets the theme before the page shows. The choice is kept in `localStorage`.
+- A click on an element with the class `ygo-theme-toggle` changes the theme.
+
+An attribute makes a good theme button. It shows the attribute of the other theme:
 
 ```html
-<button class="attribute ygo-theme-toggle" type="button" aria-label="Light / dark theme"></button>
+<button class="attribute ygo-theme-toggle" type="button" aria-label="Light or dark theme"></button>
 ```
 
 ## Variables
 
-Other stylesheets can use the variables of ygo.css: `--card-frame`, `--card-frame-small`,
-`--card-text` (textures), `--card-hi`, `--card-lo`, `--card-ink` (colors of the card type),
-`--ygo-raised`, `--ygo-sunken` (border colors of the bevels), `--ygo-text-box-frame`,
-`--ygo-font-name`, `--ygo-font-text`, `--ygo-font-type`, `--ygo-ink`, `--ygo-link`.
+Your own CSS can use these variables:
 
-A texture is drawn at its own size: `--card-frame` as a 512px tile, `--card-frame-small` and
-`--card-text` as 256px tiles. A tile scaled by the browser can show its edges as thin lines.
+| Variable | Value |
+|---|---|
+| `--card-frame` | The frame texture. Draw it as a 512px tile |
+| `--card-frame-small` | The frame texture as a 256px tile |
+| `--card-text` | The text box texture as a 256px tile |
+| `--card-hi`, `--card-lo` | The light and the dark edge color of the card type |
+| `--card-ink` | The text color on the frame |
+| `--ygo-raised`, `--ygo-sunken` | Border colors for raised and sunken edges |
+| `--ygo-text-box-frame` | The frame image of the text box |
+| `--ygo-font-name`, `--ygo-font-text`, `--ygo-font-type` | The card fonts |
+| `--ygo-ink`, `--ygo-link` | Text and link color on a text box |
+
+Draw each texture at its own size. A scaled tile can show thin lines at its edges.
 
 ## Assets
 
-`tools/make_assets.py` makes the textures, the text box frame and the walls (see its
-description). The textures are periodic noise in the colors of the card templates of
-[kooriookami/yugioh-card](https://github.com/kooriookami/yugioh-card); the text box frame is cut
-from those templates. The fonts and the attribute icons are from that project too. The wall is
-made from the Papyrus of Ani
-([Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Papyrus_ani_curs_hiero.jpg),
-public domain), with a glyph made from a Black Rose Dragon picture.
+`tools/make_assets.py` makes the images in `assets/`. Read the top of the file for the commands.
+
+- The textures are noise in the colors of the card templates of
+  [kooriookami/yugioh-card](https://github.com/kooriookami/yugioh-card).
+- The text box frame is cut from these templates.
+- The fonts and the attribute icons are from the same project.
+- The wall is from the Papyrus of Ani
+  ([Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Papyrus_ani_curs_hiero.jpg),
+  public domain). One glyph is made from a Black Rose Dragon picture.
+- `docs/example.html` is the page of the images above.
 
 ## License
 
-The code (CSS, JavaScript, tools) is MIT licensed. The card designs, the fonts and the card art
-belong to their owners (Konami, the fonts' foundries, the artists): this is a fan work.
+The code (CSS, JavaScript, Python) has the MIT license. The card designs, the fonts and the card
+art belong to their owners (Konami, the font makers, the artists). This is a fan project.

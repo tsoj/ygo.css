@@ -8,119 +8,245 @@
     <script src="ygo.js"></script>
     <link rel="stylesheet" href="ygo.css">
     <style>
-        /* (this page's layout, not part of ygo.css) */
-        body { margin: 0; padding: 16px; }
-        main { max-width: 860px; margin: 0 auto; display: grid; gap: 20px; }
+        /* The layout of this page (not part of ygo.css) */
+        body { margin: 0; }
+        .layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 16px;
+                  max-width: 1000px; margin: 0 auto; padding: 16px; align-items: start; }
+        nav.card-frame { position: sticky; top: 16px; padding: 10px 6px; }
+        nav ul { list-style: none; margin: 0; padding: 0; }
+        nav li a { display: block; padding: 3px 10px; text-decoration: none; }
+        nav li a:hover { text-decoration: underline; }
+        nav .heading { font-family: var(--ygo-font-type); padding: 8px 10px 2px; }
+        main { display: grid; gap: 16px; min-width: 0; }
         section { display: grid; gap: 12px; }
-        h2 { margin: 0; }
-        p { margin: 0; line-height: 1.4; }
-        .demo { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-        pre.code { margin: 0; padding: 8px 10px; overflow-x: auto; background: rgba(0, 0, 0, 0.08);
-                   border: 1px solid rgba(0, 0, 0, 0.25); font: 13px/1.4 ui-monospace, monospace; }
+        h1, h2 { margin: 0; }
+        h1.name-box { font-size: 2rem; }
+        p { margin: 0; line-height: 1.4; max-width: 65ch; }
+        .example { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .example.column { display: grid; }
+        details summary { cursor: pointer; font-family: var(--ygo-font-name); }
+        pre.code { margin: 8px 0 0; padding: 8px 10px; overflow-x: auto; font: 13px/1.45 ui-monospace, monospace;
+                   background: rgba(0, 0, 0, 0.08); border: 1px solid rgba(0, 0, 0, 0.25); }
         :root[data-theme="dark"] pre.code { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.2); }
-        .card-frame.small { padding: 8px 12px; font-family: var(--ygo-font-name); }
-        form.demo label { display: grid; gap: 4px; font-family: var(--ygo-font-name); }
+        .types { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+        .types .card-frame { padding: 10px; font-family: var(--ygo-font-name); text-align: center; }
+        .example label { display: grid; gap: 4px; font-family: var(--ygo-font-name); }
+        @media (max-width: 700px) {
+            .layout { grid-template-columns: minmax(0, 1fr); padding: 8px; }
+            nav.card-frame { position: static; }
+        }
     </style>
 </head>
 <body>
+<div class="layout">
+
+<nav class="card-frame" aria-label="Contents">
+    <ul>
+        <li class="heading">[Intro]</li>
+        <li><a href="#use">Use</a></li>
+        <li><a href="#card-types">Card types</a></li>
+        <li><a href="#theme">Light and dark</a></li>
+        <li class="heading">[Components]</li>
+        <li><a href="#card-frame">Card frame</a></li>
+        <li><a href="#name-box">Name box</a></li>
+        <li><a href="#attribute">Attribute</a></li>
+        <li><a href="#text-box">Text box</a></li>
+        <li><a href="#table">Table</a></li>
+        <li><a href="#stat-box">Stat box</a></li>
+        <li><a href="#art-box">Art box</a></li>
+        <li><a href="#button">Button</a></li>
+        <li><a href="#field">Field</a></li>
+        <li><a href="#line">Line</a></li>
+        <li class="heading">[More]</li>
+        <li><a href="https://github.com/tsoj/ygo.css">GitHub</a></li>
+    </ul>
+</nav>
+
 <main>
 
-<h1 class="name-box">ygo.css <button class="attribute ygo-theme-toggle" type="button" aria-label="Light / dark theme" title="Light / dark theme"></button></h1>
+<h1 class="name-box">ygo.css <button class="attribute ygo-theme-toggle" type="button" aria-label="Light or dark theme" title="Light or dark theme"></button></h1>
 
 <section class="card-frame">
-    <p>A stylesheet in the materials of Yu-Gi-Oh! cards: card frames, name boxes, text boxes, with
-    hard bevels as in Windows 98. It styles some elements by themselves (body, buttons, fields)
-    and gives classes for the rest. The attribute above switches between the light theme (Normal
-    monster) and the dark theme (Dark Synchro).</p>
-    <pre class="code">&lt;script src="ygo.css/ygo.js"&gt;&lt;/script&gt;      &lt;!-- in &lt;head&gt;: the theme before the first paint --&gt;
+    <p>A CSS library that looks like Yu-Gi-Oh! cards. The edges are hard bevels, as in Windows 98.
+    It styles some elements directly (buttons, fields) and gives classes for the rest. Click the
+    attribute above to change between the light and the dark theme.</p>
+    <div class="card-frame" style="display: grid; gap: 14px;">
+        <div class="name-box">Black Rose Dragon <span class="attribute"></span></div>
+        <div class="text-box">
+            <p class="type-line">Dragon/Synchro/Effect</p>
+            <p>When this card is Synchro Summoned: You can destroy all cards on the field.</p>
+        </div>
+        <div class="example">
+            <span class="stat-box" data-card="spell">LLR: 2.95<br>Elo: +5.6</span>
+            <span class="stat-box" data-card="trap">LLR: -2.97<br>Elo: -2.2</span>
+            <button type="button">Summon</button>
+            <button type="button" data-card="fusion">Fuse</button>
+            <input value="Dark Magician Girl" aria-label="Card name">
+        </div>
+    </div>
+</section>
+
+<section class="card-frame" id="use">
+    <h2 class="name-box">Use</h2>
+    <p>Put the <code>ygo.css</code> folder into your project. Then add these two lines to
+    <code>&lt;head&gt;</code>. The stylesheet loads its images and fonts from the folder
+    <code>assets</code> next to it.</p>
+    <pre class="code">&lt;script src="ygo.css/ygo.js"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" href="ygo.css/ygo.css"&gt;</pre>
 </section>
 
-<section class="card-frame">
-    <h2 class="name-box">Card frames</h2>
-    <p>A panel of card frame. The card type is <code>data-card</code> on any element; elements
-    inside take it on (name boxes, buttons, text boxes). Without one: Normal, in the dark theme
+<section class="card-frame" id="card-types">
+    <h2 class="name-box">Card types</h2>
+    <p>Set the card type with <code>data-card</code> on an element. The elements inside it get
+    the same type. Without <code>data-card</code>, the type is Normal. In the dark theme, it is
     Dark Synchro.</p>
-    <div class="demo" id="types"></div>
-    <pre class="code">&lt;div class="card-frame" data-card="trap"&gt;...&lt;/div&gt;</pre>
+    <div class="types" id="types"></div>
 </section>
 
-<section class="card-frame">
-    <h2 class="name-box">Name boxes and attributes</h2>
-    <div class="name-box" data-card="effect">Dark Magician Girl <span class="attribute"></span></div>
-    <div class="name-box" data-card="synchro">Black Rose Dragon <span class="attribute"></span></div>
-    <div class="name-box" data-card="xyz">Number 39: Utopia <span class="attribute" data-attribute="light"></span></div>
-    <pre class="code">&lt;div class="name-box"&gt;Dark Magician Girl &lt;span class="attribute"&gt;&lt;/span&gt;&lt;/div&gt;
-&lt;span class="attribute" data-attribute="light"&gt;&lt;/span&gt;
-&lt;!-- switches the theme (ygo.js); shows the attribute of the theme it switches to: --&gt;
-&lt;button class="attribute ygo-theme-toggle" type="button" aria-label="Light / dark theme"&gt;&lt;/button&gt;</pre>
-</section>
-
-<section class="card-frame">
-    <h2 class="name-box">Text boxes</h2>
-    <div class="text-box">
-        <p class="type-line">Spellcaster/Effect</p>
-        <p>Gains 300 ATK for every "Dark Magician" or "Magician of Black Chaos" in the GY.</p>
+<section class="card-frame" id="theme">
+    <h2 class="name-box">Light and dark</h2>
+    <p>The light theme is the default. <code>data-theme="dark"</code> on <code>&lt;html&gt;</code>
+    sets the dark theme. <code>ygo.js</code> keeps the choice and changes the theme when you click
+    an element with the class <code>ygo-theme-toggle</code>.</p>
+    <div class="example">
+        <button class="attribute ygo-theme-toggle" type="button" aria-label="Light or dark theme"></button>
     </div>
-    <table class="text-box">
-        <tr><th>Test</th><th>Games</th><th>Elo</th></tr>
-        <tr><td><a href="#">lmr-min3</a></td><td>14848</td><td>+5.6 ± 4.3</td></tr>
-        <tr><td><a href="#">tt-beta-probe</a></td><td>2354</td><td>+4.7 ± 10.0</td></tr>
-    </table>
-    <pre class="code">&lt;div class="text-box"&gt;
-    &lt;p class="type-line"&gt;Spellcaster/Effect&lt;/p&gt;
-    &lt;p&gt;Gains 300 ATK for every ...&lt;/p&gt;
-&lt;/div&gt;
-&lt;table class="text-box"&gt;...&lt;/table&gt;</pre>
+    <details><summary>Show code</summary></details>
 </section>
 
-<section class="card-frame">
-    <h2 class="name-box">Stat boxes and art boxes</h2>
-    <div class="demo">
-        <span class="stat-box" data-card="spell">LLR: 2.95 (-2.94, 2.94)<br>Games: 14848</span>
-        <span class="stat-box" data-card="trap">LLR: -2.97 (-2.94, 2.94)<br>Games: 6144</span>
-        <span class="stat-box" data-card="ritual">LLR: 2.96 (-2.94, 2.94)<br>Games: 9216</span>
+<section class="card-frame" id="card-frame">
+    <h2 class="name-box">Card frame</h2>
+    <p>A panel of card frame with raised edges.</p>
+    <div class="example">
+        <div class="card-frame">Normal</div>
+        <div class="card-frame" data-card="trap">Trap</div>
     </div>
-    <pre class="art-box">Elo   | 4.72 +- 10.01 (95%)
-LLR   | 0.40 (-2.94, 2.94) [0.00, 5.00]
-Games | N: 2354 W: 1192 L: 1160 D: 2</pre>
-    <pre class="code">&lt;span class="stat-box" data-card="spell"&gt;LLR: 2.95 ...&lt;/span&gt;
-&lt;pre class="art-box"&gt;...&lt;/pre&gt;</pre>
+    <details><summary>Show code</summary></details>
 </section>
 
-<section class="card-frame">
-    <h2 class="name-box">Buttons</h2>
-    <div class="demo">
+<section class="card-frame" id="name-box">
+    <h2 class="name-box">Name box</h2>
+    <p>The box with the card name. Put an attribute at the end.</p>
+    <div class="example column">
+        <div class="name-box" data-card="effect">Dark Magician Girl <span class="attribute"></span></div>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="attribute">
+    <h2 class="name-box">Attribute</h2>
+    <p>An attribute icon: DARK, or LIGHT with <code>data-attribute="light"</code>.</p>
+    <div class="example">
+        <span class="attribute"></span>
+        <span class="attribute" data-attribute="light"></span>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="text-box">
+    <h2 class="name-box">Text box</h2>
+    <p>The text box of a card. The class <code>type-line</code> adds the brackets.</p>
+    <div class="example column">
+        <div class="text-box">
+            <p class="type-line">Spellcaster/Effect</p>
+            <p>Gains 300 ATK for every "Dark Magician" or "Magician of Black Chaos" in the GY.</p>
+        </div>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="table">
+    <h2 class="name-box">Table</h2>
+    <p>A table with the class <code>text-box</code> gets lines between its rows.</p>
+    <div class="example column">
+        <table class="text-box">
+            <tr><th>Test</th><th>Games</th><th>Elo</th></tr>
+            <tr><td><a href="#table">lmr-min3</a></td><td>14848</td><td>+5.6 ± 4.3</td></tr>
+            <tr><td><a href="#table">tt-beta-probe</a></td><td>2354</td><td>+4.7 ± 10.0</td></tr>
+        </table>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="stat-box">
+    <h2 class="name-box">Stat box</h2>
+    <p>A small box with a frame ring in its card type.</p>
+    <div class="example">
+        <span class="stat-box" data-card="spell">LLR: 2.95<br>Games: 14848</span>
+        <span class="stat-box" data-card="ritual">LLR: 2.96<br>Games: 9216</span>
+        <span class="stat-box" data-card="trap">LLR: -2.97<br>Games: 6144</span>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="art-box">
+    <h2 class="name-box">Art box</h2>
+    <p>A dark box in the steel frame of a card's art. Use it for code or output.</p>
+    <div class="example column">
+        <pre class="art-box">Elo   | 4.72 +- 10.01 (95%)
+LLR   | 0.40 (-2.94, 2.94) [0.00, 5.00]</pre>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="button">
+    <h2 class="name-box">Button</h2>
+    <p>A raised box in the card type. It looks pushed in when you click it. A link with the class
+    <code>button</code> looks the same.</p>
+    <div class="example">
         <button type="button">Normal</button>
         <button type="button" data-card="effect">Effect</button>
         <button type="button" data-card="fusion">Fusion</button>
         <button type="button" data-card="spell">Spell</button>
-        <button type="button" data-card="trap">Trap</button>
-        <a class="button" href="#" data-card="link">A link</a>
+        <a class="button" href="#button" data-card="link">Link</a>
         <button type="button" disabled>Disabled</button>
     </div>
-    <pre class="code">&lt;button data-card="fusion"&gt;Fusion&lt;/button&gt;
-&lt;a class="button" href="..."&gt;A link&lt;/a&gt;</pre>
+    <details><summary>Show code</summary></details>
 </section>
 
-<section class="card-frame">
-    <h2 class="name-box">Fields</h2>
-    <form class="demo" onsubmit="return false">
-        <label>Dev branch <input value="futility-no-pv"></label>
+<section class="card-frame" id="field">
+    <h2 class="name-box">Field</h2>
+    <p>Text fields, lists and text areas are sunken text boxes.</p>
+    <div class="example">
+        <label>Branch <input value="futility-no-pv"></label>
         <label>Bounds <select><option>[0, 5]</option><option>[-5, 0]</option></select></label>
         <label>Info <textarea rows="2">search: futility-no-pv</textarea></label>
         <label><span><input type="checkbox" checked> Adjudicate</span></label>
-    </form>
-    <hr>
-    <p>A line between parts: <code>&lt;hr&gt;</code>.</p>
+    </div>
+    <details><summary>Show code</summary></details>
+</section>
+
+<section class="card-frame" id="line">
+    <h2 class="name-box">Line</h2>
+    <p>A line between parts is engraved.</p>
+    <div class="example column">
+        <hr>
+    </div>
+    <details><summary>Show code</summary></details>
 </section>
 
 </main>
+</div>
+
 <script>
-    // (the card types of the first section)
+    // The card types
     const types = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'link', 'spell', 'trap', 'dark-synchro'];
-    document.getElementById('types').innerHTML = types.map(t =>
-        `<div class="card-frame small" data-card="${t}">${t.replace('-', ' ')}</div>`).join('');
+    document.getElementById('types').innerHTML = types.map(type =>
+        `<div class="card-frame" data-card="${type}">${type.replace('-', ' ')}</div>`).join('');
+
+    // The code of each example: its HTML, without the common indentation
+    document.querySelectorAll('section').forEach(section => {
+        const example = section.querySelector('.example');
+        const details = section.querySelector('details');
+        if (!example || !details) return;
+        const lines = example.innerHTML.split('\n').filter(line => line.trim());
+        const tags = lines.filter(line => line.trim().startsWith('<'));   // (the lines of a <pre> keep their own indentation)
+        const indent = Math.min(...tags.map(line => line.match(/^ */)[0].length));
+        const pre = document.createElement('pre');
+        pre.className = 'code';
+        pre.textContent = lines.map(line => line.slice(indent)).join('\n');
+        details.appendChild(pre);
+    });
 </script>
 </body>
 </html>

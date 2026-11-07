@@ -177,6 +177,7 @@ hr {
 /* ---------- .attribute: an attribute icon (data-attribute="dark | light") ---------- */
 
 .attribute {
+    font: inherit;   /* (a button does not inherit the font size: the size is in em) */
     flex: none;
     display: inline-block;
     width: 1.3em;
