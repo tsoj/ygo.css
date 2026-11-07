@@ -44,9 +44,7 @@
 
     --ygo-text-box-frame: url("assets/text-box-frame.png");
 
-    /* Bevels: light edges top and left, dark edges bottom and right */
-    --ygo-raised: var(--card-hi) var(--card-lo) var(--card-lo) var(--card-hi);
-    --ygo-sunken: var(--card-lo) var(--card-hi) var(--card-hi) var(--card-lo);
+    /* Bevels over a texture (white and black, for any card type) */
     --ygo-raised-overlay: rgba(255, 255, 255, 0.55) rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.55);
     --ygo-sunken-overlay: rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.55) rgba(255, 255, 255, 0.55) rgba(0, 0, 0, 0.5);
 }
@@ -124,6 +122,14 @@
     --card-frame-small: url("assets/textures/frame-trap-256.jpg");
     --card-text: url("assets/textures/text-trap-256.jpg");
     --card-hi: #cd7fb5; --card-lo: #611842; --card-ink: #fff;
+}
+
+/* Bevels in the card type's colors: light edges top and left, dark edges bottom and right.
+   (Set again on every element with a card type: a variable made from other variables is
+   computed where it is set, and inherited as the result.) */
+:root, [data-card] {
+    --ygo-raised: var(--card-hi) var(--card-lo) var(--card-lo) var(--card-hi);
+    --ygo-sunken: var(--card-lo) var(--card-hi) var(--card-hi) var(--card-lo);
 }
 
 /* ---------- The page ---------- */
